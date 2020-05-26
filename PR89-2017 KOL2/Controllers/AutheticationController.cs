@@ -25,7 +25,7 @@ namespace PR89_2017_KOL2.Controllers
         public ActionResult Register(Korisnik korisnik)
         {
             Dictionary<string, Korisnik> korisnici = (Dictionary<string, Korisnik>)HttpContext.Application["korisnici"];
-            Korisnik k = korisnici.Where(x => x.Value.Equals(korisnik)).Select(x => x.Value).Single();
+            Korisnik k = korisnici.Where(x => x.Value.Equals(korisnik)).Select(x => x.Value).SingleOrDefault();
             if(k != null)
             {
                 ViewBag.Message = $"Korisnik sa korisnickim imenom {korisnik.KorisnickoIme} vec postoji!";
@@ -46,7 +46,7 @@ namespace PR89_2017_KOL2.Controllers
         public ActionResult Login(string korisnickoIme, string lozinka)
         {
             Dictionary<string, Korisnik> korisnici = (Dictionary<string, Korisnik>)HttpContext.Application["korisnici"];
-            Korisnik korisnik = korisnici.Where(x => x.Value.KorisnickoIme.Equals(korisnickoIme) && x.Value.Lozinka.Equals(lozinka)).Select(x => x.Value).Single();
+            Korisnik korisnik = korisnici.Where(x => x.Value.KorisnickoIme.Equals(korisnickoIme) && x.Value.Lozinka.Equals(lozinka)).Select(x => x.Value).SingleOrDefault();
 
             if(korisnik == null)
             {
