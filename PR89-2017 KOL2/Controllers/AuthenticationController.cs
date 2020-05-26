@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace PR89_2017_KOL2.Controllers
 {
-    public class AutheticationController : Controller
+    public class AuthenticationController : Controller
     {
         // GET: Authetication
         public ActionResult Index()
