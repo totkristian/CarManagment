@@ -1,0 +1,52 @@
+﻿@model PR89_2017_KOL2.Models.Korisnik
+@{
+    ViewBag.Title = "Registration";
+}
+
+<h2>Registration</h2>
+
+<div>
+    @ViewBag.Message
+</div>
+<form action="Register" method="post">
+    <table>
+        <tr>
+            <td>Korisnicko ime:</td>
+            <td><input type="text" name="korisnickoIme" required/></td>
+        </tr>
+        <tr>
+            <td>Lozinka:</td>
+            <td><input type="password" name="lozinka" required/></td>
+        </tr>
+        <tr>
+            <td>Ime:</td>
+            <td><input type="text" name="ime" required/></td>
+        </tr>
+        <tr>
+            <td>Prezime:</td>
+            <td><input type="text" name="prezime" required/></td>
+        </tr>
+        <tr>
+            <td>Pol:</td>
+            <td>
+                Musko<input type="radio" name="pol" value="MUSKO" checked/>
+                Zensko<input type="radio" name="pol" value="ZENSKO"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" name="email" required/></td>
+        </tr>
+        <tr>
+            <td>Datum rodjenja:</td>
+            <!--Add todays date for max value and for inital value do the same-->
+            <td><input type="date" name="datumRodjenja" min="1914-01-01" max="2020-05-26" required></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="register" />
+            </td>
+        </tr>
+    </table>
+</form>
+
