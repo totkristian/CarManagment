@@ -1,10 +1,13 @@
-﻿using System;
+﻿using PR89_2017_KOL2.Helpers;
+using PR89_2017_KOL2.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+
 
 
 namespace PR89_2017_KOL2
@@ -18,7 +21,9 @@ namespace PR89_2017_KOL2
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            HttpContext.Current.Application["korisnici"] = new Dictionary<string, Korisnik>();
+            Dictionary<string, Korisnik> korisnici = CitanjePodataka.citajKorisnike();
+            HttpContext.Current.Application["korisnici"] = korisnici;
+            
         }
     }
 }
