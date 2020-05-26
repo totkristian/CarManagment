@@ -15,22 +15,33 @@ namespace PR89_2017_KOL2.Helpers
         {
             Dictionary<String, Korisnik> korisnici = new Dictionary<string, Korisnik>();
             
-            string[] users = System.IO.File.ReadAllLines(path);
 
-            for(int i=0; i<users.Length; i++)
+            using(System.IO.StreamReader sr = System.IO.File.OpenText(path))
             {
-                string[] user = users[i].Split(',');
-                korisnici.Add(user[0], new Korisnik {
-                    Id = i + 1,
-                    KorisnickoIme = user[0],
-                    Lozinka = user[1],
-                    Ime = user[2],
-                    Prezime = user[3],
-                    Pol = (Sex)Enum.Parse(typeof(Sex), user[4]),
-                    Email = user[5],
-                    DatumRodjenja = DateTime.Parse(user[6]),
-                    Uloga = (Role)Enum.Parse(typeof(Role), user[7])
-                }); 
+                try
+                {
+                    string line = "";
+                    int brojac = 0;
+                    while((line = sr.ReadLine()) != null) {
+                        string[] user = line.Split(',');
+                        korisnici.Add(user[0], new Korisnik
+                        {
+                            Id = ++brojac,
+                            KorisnickoIme = user[0],
+                            Lozinka = user[1],
+                            Ime = user[2],
+                            Prezime = user[3],
+                            Pol = (Sex)Enum.Parse(typeof(Sex), user[4]),
+                            Email = user[5],
+                            DatumRodjenja = DateTime.Parse(user[6]),
+                            Uloga = (Role)Enum.Parse(typeof(Role), user[7])
+                        });
+                    }
+                }
+                catch(Exception e)
+                {
+                    //neka greska se desila
+                }
             }
             return korisnici;
         }
@@ -39,9 +50,18 @@ namespace PR89_2017_KOL2.Helpers
         {
             using(System.IO.StreamWriter sw = System.IO.File.AppendText(path))
             {
-
+                try
+                {
+                    sw.WriteLine(korisnik.ToString());
+                    return true;
+                   
+                }
+                catch(Exception e)
+                {
+                    //neka greska
+                    return false;
+                }
             }
-            return false;
         }
     }
 }
