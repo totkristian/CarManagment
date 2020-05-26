@@ -1,4 +1,5 @@
-﻿using PR89_2017_KOL2.Models;
+﻿using PR89_2017_KOL2.Helpers;
+using PR89_2017_KOL2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,15 @@ namespace PR89_2017_KOL2.Controllers
                 ViewBag.Message = $"Korisnik sa korisnickim imenom {korisnik.KorisnickoIme} vec postoji!";
                 return View();
             }
+            korisnik.Uloga = Role.KUPAC;
             korisnici.Add(korisnik.KorisnickoIme, korisnik);
+
+            if (!CitanjePodataka.pisiKorisnika(korisnik))
+                //desila se greska
+
             Session["korisnik"] = korisnik;
             ViewBag.Message = $"Uspesno ste se registrovali!";
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace PR89_2017_KOL2.Models
 
         public override string ToString()
         {
-            return $"{KorisnickoIme},{Lozinka},{Ime},{Prezime},{Pol.ToString()},{Email},{DatumRodjenja.ToString()},{Uloga.ToString()}";
+            return $"{KorisnickoIme},{Lozinka},{Ime},{Prezime},{Pol.ToString()},{Email},{DatumRodjenja.ToShortDateString().Replace('/','-')},{Uloga.ToString()}";
         }
         public override bool Equals(object obj)
         {
