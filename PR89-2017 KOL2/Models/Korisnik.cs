@@ -38,28 +38,13 @@ namespace PR89_2017_KOL2.Models
         public DateTime DatumRodjenja { get => datumRodjenja; set => datumRodjenja = value; }
         public Role Uloga { get => uloga; set => uloga = value; }
 
+        public override string ToString()
+        {
+            return $"{KorisnickoIme},{Lozinka},{Ime},{Prezime},{Pol.ToString()},{Email},{DatumRodjenja.ToString()},{Uloga.ToString()}";
+        }
         public override bool Equals(object obj)
         {
-            var korisnik = obj as Korisnik;
-            return korisnik != null &&
-                   id == korisnik.id &&
-                   korisnickoIme == korisnik.korisnickoIme &&
-                   lozinka == korisnik.lozinka &&
-                   ime == korisnik.ime &&
-                   prezime == korisnik.prezime &&
-                   pol == korisnik.pol &&
-                   email == korisnik.email &&
-                   datumRodjenja == korisnik.datumRodjenja &&
-                   uloga == korisnik.uloga &&
-                   Id == korisnik.Id &&
-                   KorisnickoIme == korisnik.KorisnickoIme &&
-                   Lozinka == korisnik.Lozinka &&
-                   Ime == korisnik.Ime &&
-                   Prezime == korisnik.Prezime &&
-                   Pol == korisnik.Pol &&
-                   Email == korisnik.Email &&
-                   DatumRodjenja == korisnik.DatumRodjenja &&
-                   Uloga == korisnik.Uloga;
+            return ((Korisnik)obj).KorisnickoIme.Equals(this.KorisnickoIme);
         }
 
         public override int GetHashCode()
