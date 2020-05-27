@@ -14,8 +14,9 @@ namespace PR89_2017_KOL2.Controllers
             Korisnik korisnik = (Korisnik)Session["korisnik"];
             if(korisnik == null || korisnik.KorisnickoIme.Equals(""))
             {
-                return RedirectToAction("Index", "Authentication");
+               // return RedirectToAction("Index", "Authentication");
             }
+            //ViewBag.Korisnik = korisnik;
             return View();
         }
 

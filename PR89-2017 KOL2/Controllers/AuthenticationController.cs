@@ -37,9 +37,8 @@ namespace PR89_2017_KOL2.Controllers
             if (!CitanjePodataka.pisiKorisnika(korisnik))
                 //desila se greska
 
-            Session["korisnik"] = korisnik;
             ViewBag.Message = $"Uspesno ste se registrovali!";
-            return RedirectToAction("Index", "Home");
+            return View("Index");
         }
 
         [HttpPost]
