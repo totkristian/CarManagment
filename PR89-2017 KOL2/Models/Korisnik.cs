@@ -27,6 +27,8 @@ namespace PR89_2017_KOL2.Models
         [Required(ErrorMessage = "Datum rodjenja je obavezan!")]
         private DateTime datumRodjenja;
         private Role uloga;
+        private bool loggedIn = false;
+
         
         public int Id { get => id; set => id = value; }
         public string KorisnickoIme { get => korisnickoIme; set => korisnickoIme = value; }
@@ -37,6 +39,7 @@ namespace PR89_2017_KOL2.Models
         public string Email { get => email; set => email = value; }
         public DateTime DatumRodjenja { get => datumRodjenja; set => datumRodjenja = value; }
         public Role Uloga { get => uloga; set => uloga = value; }
+        public bool LoggedIn { get => loggedIn; set => loggedIn = value; }
 
         public override string ToString()
         {
