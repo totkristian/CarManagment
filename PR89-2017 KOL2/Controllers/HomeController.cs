@@ -16,7 +16,6 @@ namespace PR89_2017_KOL2.Controllers
             {
                // return RedirectToAction("Index", "Authentication");
             }
-            //ViewBag.Korisnik = korisnik;
             return View();
         }
 
