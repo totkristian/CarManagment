@@ -18,7 +18,7 @@ namespace PR89_2017_KOL2.Models
         [Required(ErrorMessage = "Boja je obavezna")]
         private string boja;
         [Required(ErrorMessage = "Boja je obavezna!")]
-        private string brojVrata;
+        private int brojVrata;
         [Required(ErrorMessage = "Opis je obavezan!")]
         private string opis;
         [Required(ErrorMessage = "Vrsta goriva je obavezna!")]
@@ -33,7 +33,7 @@ namespace PR89_2017_KOL2.Models
         public string Model { get => model; set => model = value; }
         public string OznakaSasije { get => oznakaSasije; set => oznakaSasije = value; }
         public string Boja { get => boja; set => boja = value; }
-        public string BrojVrata { get => brojVrata; set => brojVrata = value; }
+        public int BrojVrata { get => brojVrata; set => brojVrata = value; }
         public string Opis { get => opis; set => opis = value; }
         public Fuel VrstaGoriva { get => vrstaGoriva; set => vrstaGoriva = value; }
         public double Cena { get => cena; set => cena = value; }
