@@ -6,7 +6,58 @@
 <div>
     @ViewBag.Message
 </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <form action="~/Cars/SortirajPoMarki" method="get">
+                <label>Marka</label><input list="marke" name="marka" style="margin-left:5px;" />
+                <datalist id="marke">
+                    @foreach (string marka in ViewBag.Marke)
+                    {
+                        <option value=@marka></option>
+                    }
+                </datalist><br />
+                <input type="submit" name="trazi" value="Sortiraj" style="margin-top: 5px; margin-left:45px;"/>
+                <input type="submit" name="trazi" value="Trazi" />
+            </form>
+        </div>
+        <div class="col-md-3">
+            <form action="~/Cars/SortirajPoModelu" method="get">
+                <label>Model</label><input list="modeli" name="model" style="margin-left:5px;"/>
+                <datalist id="modeli">
+                    @foreach (string m in ViewBag.Modeli)
+                    {
+                        <option value=@m></option>
+                    }
 
+                </datalist><br />
+                <input type="submit" name="trazi" value="Sortiraj" style="margin-top: 5px; margin-left:45px;"/>
+                <input type="submit" name="trazi" value="Trazi" />
+            </form>
+        </div>
+        <div class="col-md-3">
+            <form action="~/Cars/SortirajPoCeni" method="get">
+                <label>Cena</label><input list="sort" name="cena" style="margin-left:5px;"/>
+                <datalist id="sort">
+                    <option value="Opadajuce"></option>
+                    <option value="Rastuce"></option>
+                </datalist>
+                <input type="submit" value="Sortiraj" style="margin-top: 5px; margin-left:40px;" />
+            </form>
+        </div>
+        <div class="col-md-3" >
+            <form action="~/Cars/NadjiPoCeni" method="get">
+                <label>Od</label><input type="text" name="cenaOd" placeholder="0" style="width:50px; margin-left:5px;" />
+                <label>Do</label><input type="text" name="cenaDo" placeholder="0" style="width:50px; margin-left:5px;" /><br />
+                <input type="submit" value="Trazi" style="margin-left: 25px; margin-top:3px;" />
+
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    
+</div>
 <div class="container">
     <div class="row col-lg-12 col-md-offset custyle">
         <table class="table table-striped custab">
@@ -26,7 +77,7 @@
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
-            @foreach (Vozilo vozilo in ViewBag.Vozila.Values)
+            @foreach (Vozilo vozilo in ViewBag.Vozila)
             {
                 <tr>
                     <td>@vozilo.Id</td>

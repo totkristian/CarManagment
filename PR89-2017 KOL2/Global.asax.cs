@@ -21,8 +21,9 @@ namespace PR89_2017_KOL2
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Dictionary<string, Korisnik> korisnici = CitanjePodataka.citajKorisnike();
-            HttpContext.Current.Application["korisnici"] = korisnici;
+
+            HttpContext.Current.Application["korisnici"] = CitanjePodataka.citajKorisnike();
+            HttpContext.Current.Application["vozila"] = CitanjePodataka.citajVozila();
             
         }
     }
