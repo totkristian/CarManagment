@@ -9,14 +9,15 @@ namespace PR89_2017_KOL2.Helpers
 {
     public static class CitanjePodataka
     {
-        public static string path = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/App_Data/Korisnici.txt";
+        public static string pathKorisnik = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/App_Data/Korisnici.txt";
+        public static string pathVozilo = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/App_Data/Vozila.txt";
 
         public static Dictionary<String,Korisnik> citajKorisnike()
         {
             Dictionary<String, Korisnik> korisnici = new Dictionary<string, Korisnik>();
             
 
-            using(System.IO.StreamReader sr = System.IO.File.OpenText(path))
+            using(System.IO.StreamReader sr = System.IO.File.OpenText(pathKorisnik))
             {
                 try
                 {
@@ -48,7 +49,7 @@ namespace PR89_2017_KOL2.Helpers
 
         public static bool pisiKorisnika(Korisnik korisnik)
         {
-            using(System.IO.StreamWriter sw = System.IO.File.AppendText(path))
+            using(System.IO.StreamWriter sw = System.IO.File.AppendText(pathKorisnik))
             {
                 try
                 {
@@ -62,6 +63,41 @@ namespace PR89_2017_KOL2.Helpers
                     return false;
                 }
             }
+        }
+
+        public static List<Vozilo> citajVozila()
+        {
+            List<Vozilo> vozila = new List<Vozilo>();
+            using (System.IO.StreamReader sr = System.IO.File.OpenText(pathVozilo))
+            {
+                try
+                {
+                    string line = "";
+                    int brojac = 0;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] vozilo = line.Split(',');
+                        vozila.Add(new Vozilo
+                        {
+                            Id = ++brojac,
+                            Marka = vozilo[0],
+                            Model = vozilo[1],
+                            OznakaSasije = vozilo[2],
+                            Boja = vozilo[3],
+                            BrojVrata = Int32.Parse(vozilo[4]),
+                            Opis = vozilo[5],
+                            VrstaGoriva = (Fuel)Enum.Parse(typeof(Fuel), vozilo[6]),
+                            Cena = Double.Parse(vozilo[7]),
+                            NaStanju = bool.Parse(vozilo[8])
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    //neka greska se desila
+                }
+            }
+            return vozila;
         }
     }
 }
