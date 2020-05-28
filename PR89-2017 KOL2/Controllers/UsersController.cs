@@ -25,8 +25,7 @@ namespace PR89_2017_KOL2.Controllers
                 ViewBag.Message = "Nemate pravo pristupa ovoj stranici!";
                 return RedirectToAction("Index", "Home");
             }
-            Dictionary<string, Korisnik> korisnici = (Dictionary<string, Korisnik>)HttpContext.Application["korisnici"];
-            ViewBag.Korisnici = korisnici.Values;
+            ViewBag.Korisnici = ((Dictionary<string, Korisnik>)HttpContext.Application["korisnici"]).Values;
 
 
             return View();
@@ -34,7 +33,17 @@ namespace PR89_2017_KOL2.Controllers
 
         public ActionResult deleteUser(string korIme)
         {
-            Debug.WriteLine(korIme);
+            Dictionary<string, Korisnik> korisnici = (Dictionary<string, Korisnik>)HttpContext.Application["korisnici"];
+            try
+            {
+                korisnici.Remove(korIme);
+                HttpContext.Application["korisnici"] = korisnici;
+            }
+            catch
+            {
+                ViewBag.Message("Taj korisnik ne postoji!");
+            }
+            ViewBag.Korisnici = korisnici;
             return View("Users");
         }
     }

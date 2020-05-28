@@ -55,5 +55,11 @@ namespace PR89_2017_KOL2.Controllers
             Session["korisnik"] = korisnik;
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Logout()
+        {
+            Session["korisnik"] = null;
+            return View("Index");
+        }
     }
 }
