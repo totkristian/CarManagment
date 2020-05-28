@@ -123,6 +123,7 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CarsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,10 +173,9 @@
     <Content Include="Views\Authentication\Index.cshtml" />
     <Content Include="Views\Authentication\Register.cshtml" />
     <Content Include="Views\Cars\Cars.cshtml" />
+    <Content Include="Views\Users\Users.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Car\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
