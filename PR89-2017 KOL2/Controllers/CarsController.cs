@@ -19,7 +19,7 @@ namespace PR89_2017_KOL2.Controllers
                 //nije ulogovan korisnik
                 vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.NaStanju == true).ToList<Vozilo>();
             }
-            else if (korisnik != null || korisnik.Uloga.Equals(Role.KUPAC))
+            else if (korisnik.Uloga.Equals(Role.KUPAC))
             {
                 //ulogovan kupac
                 vozila = (List<Vozilo>)HttpContext.Application["vozila"];
@@ -28,7 +28,10 @@ namespace PR89_2017_KOL2.Controllers
             {
                 //administrator
                 vozila = (List<Vozilo>)HttpContext.Application["vozila"];
+                
             }
+           // List<Korisnik> korisnici = ;
+            
             ucitajOpcije();
             ViewBag.Vozila = vozila;
             return View();
@@ -128,8 +131,8 @@ namespace PR89_2017_KOL2.Controllers
             List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
             List<string> marke = vozila.Select(x => x.Marka).Distinct().ToList<string>();
             List<string> modeli = vozila.Select(x => x.Model).Distinct().ToList<string>();
-           
-            
+            ViewBag.Korisnici = ((Dictionary<string, Korisnik>)HttpContext.Application["korisnici"]).Values.ToList<Korisnik>();
+
             ViewBag.Marke = marke;
             
             ViewBag.Modeli = modeli;

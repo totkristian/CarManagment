@@ -77,6 +77,17 @@ namespace PR89_2017_KOL2.Helpers
                     while ((line = sr.ReadLine()) != null)
                     {
                         string[] vozilo = line.Split(',');
+                        int kupacId;
+                        Debug.WriteLine("cao ja sam" + vozilo.Length);
+                        if (vozilo.Length <= 9)
+                        {
+                            kupacId = -1;
+                        }
+                        else
+                        {
+                            kupacId = Int32.Parse(vozilo[9]);
+                        }
+                       
                         vozila.Add(new Vozilo
                         {
                             Id = ++brojac,
@@ -88,7 +99,9 @@ namespace PR89_2017_KOL2.Helpers
                             Opis = vozilo[5],
                             VrstaGoriva = (Fuel)Enum.Parse(typeof(Fuel), vozilo[6]),
                             Cena = Double.Parse(vozilo[7]),
-                            NaStanju = bool.Parse(vozilo[8])
+                            NaStanju = bool.Parse(vozilo[8]),
+                            KupacId = kupacId
+                           
                         });
                     }
                 }

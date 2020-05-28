@@ -55,9 +55,9 @@
         </div>
     </div>
 </div>
-<div class="container">
-    
-</div>
+@{ 
+    Korisnik korisnik = (Korisnik)Session["korisnik"];
+}
 <div class="container">
     <div class="row col-lg-12 col-md-offset custyle">
         <table class="table table-striped custab">
@@ -73,7 +73,13 @@
                     <th>Opis</th>
                     <th>Vrsta Goriva</th>
                     <th>Cena</th>
-                    <th>Na stanju</th>
+                    @if (korisnik != null)
+                    {
+                        if (korisnik.Uloga.Equals(Role.ADMINISTRATOR))
+                        {
+                            <th>Kupac</th>
+                        }
+                    }
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -89,7 +95,18 @@
                     <td>@vozilo.Opis</td>
                     <td>@vozilo.VrstaGoriva</td>
                     <td>@vozilo.Cena</td>
-                    <td>@vozilo.NaStanju</td>
+                    @if (korisnik != null)
+                    {
+                        if (korisnik.Uloga.Equals(Role.ADMINISTRATOR))
+                        {
+                            IEnumerable<Korisnik> korisnici = ViewBag.Korisnici;
+
+                            Korisnik kupac = korisnici.Where(x => x.Id == vozilo.KupacId).SingleOrDefault();
+                            string k = (kupac == null) ? "Na prodaju" : kupac.KorisnickoIme;
+                            <th>@k</th>
+                            }
+                     }
+
                     <td class="text-center"><a class= "btn btn-info btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                 </tr>
             }

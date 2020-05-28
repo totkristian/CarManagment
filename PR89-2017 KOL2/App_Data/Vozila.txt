@@ -1,4 +1,4 @@
-Opel,Corsa,asd545asd4asdasd,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,200,true
+Opel,Corsa,asd545asd4asdasd,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,200,true,1
 Opel,Corsa,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,600,true
 reno,laguna,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,400,true
 Opel,Corsa,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,600,true
