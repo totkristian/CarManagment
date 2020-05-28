@@ -1,6 +1,7 @@
 ﻿using PR89_2017_KOL2.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,12 +14,12 @@ namespace PR89_2017_KOL2.Controllers
         public ActionResult Users()
         {
             Korisnik korisnik = (Korisnik)Session["korisnik"];
-            if(korisnik == null)
+            if (korisnik == null)
             {
                 ViewBag.Message = "Nemate pravo pristupa ovoj stranici!";
                 return RedirectToAction("Index", "Authentication");
             }
-            else if(!korisnik.Uloga.Equals(Role.ADMINISTRATOR))
+            else if (!korisnik.Uloga.Equals(Role.ADMINISTRATOR))
             {
                 //nije admin
                 ViewBag.Message = "Nemate pravo pristupa ovoj stranici!";
@@ -29,6 +30,12 @@ namespace PR89_2017_KOL2.Controllers
 
 
             return View();
+        }
+
+        public ActionResult deleteUser(string korIme)
+        {
+            Debug.WriteLine(korIme);
+            return View("Users");
         }
     }
 }
