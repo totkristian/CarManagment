@@ -28,6 +28,8 @@ namespace PR89_2017_KOL2.Models
         [Required(ErrorMessage = "Stanje je obavezno!")]
         private bool naStanju;
 
+        private int kupacId;
+
         public int Id { get => id; set => id = value; }
         public string Marka { get => marka; set => marka = value; }
         public string Model { get => model; set => model = value; }
@@ -38,5 +40,11 @@ namespace PR89_2017_KOL2.Models
         public Fuel VrstaGoriva { get => vrstaGoriva; set => vrstaGoriva = value; }
         public double Cena { get => cena; set => cena = value; }
         public bool NaStanju { get => naStanju; set => naStanju = value; }
+        public int KupacId { get => kupacId; set => kupacId = value; }
+
+        public override string ToString()
+        {
+            return $"{Marka}|{Model}|{OznakaSasije}|{Boja}|{BrojVrata.ToString()}|{Opis}|{VrstaGoriva.ToString()}|{Cena}|{NaStanju.ToString()}|{KupacId}";
+        }
     }
 }

@@ -1,5 +1,3 @@
-Opel,Corsa,asd545asd4asdasd,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,200,true
-Opel,Corsa,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,600,true
-reno,laguna,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,400,true
-Opel,Corsa,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,600,true
-Opel,Corsa,asd545asd4,Plava,5,vrlo lep i pogodan ali brzo rdja,BENZIN,600,true
+FICA|asd|asd|plkav|21|asdas|BENZIN_GAS|123|True|-1
+cao|cao|cao|palva|5|asdasd|METAN|100|True|-1
+FICA|FICA|5asd54|CRVENA|5|menjam ficu|METAN|1000|True|-1

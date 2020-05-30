@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using PR89_2017_KOL2.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,6 +9,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
+    @{ 
+        Korisnik korisnik = (Korisnik)Session["korisnik"];
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -21,8 +26,19 @@
                 <ul class="nav navbar-nav">
                     <li><a href="../Home/Index">Home</a></li>
                     <li><a href="../Cars/Cars">Automobili</a></li>
-                    <li><a href="../Authentication/Index">Login</a></li>
-                    <li><a href="../Authentication/Register">Register</a></li>
+                    @if (korisnik != null && korisnik.Uloga.Equals(Role.ADMINISTRATOR))
+                    {
+                        <li><a href="../Users/Users">Korisnici</a></li>
+                    }
+                    @if (korisnik == null)
+                    {
+                        <li><a href="../Authentication/Index">Login</a></li>
+                        <li><a href="../Authentication/Register">Register</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="../Authentication/Logout">Log out</a></li>
+                    }
                 </ul>
             </div>
         </div>

@@ -15,16 +15,17 @@ namespace PR89_2017_KOL2.Helpers
         public static Dictionary<String,Korisnik> citajKorisnike()
         {
             Dictionary<String, Korisnik> korisnici = new Dictionary<string, Korisnik>();
-            
 
-            using(System.IO.StreamReader sr = System.IO.File.OpenText(pathKorisnik))
+            if (!System.IO.File.Exists(pathKorisnik))
+                System.IO.File.Create(pathKorisnik);
+            using (System.IO.StreamReader sr = System.IO.File.OpenText(pathKorisnik))
             {
                 try
                 {
                     string line = "";
                     int brojac = 0;
                     while((line = sr.ReadLine()) != null) {
-                        string[] user = line.Split(',');
+                        string[] user = line.Split('|');
                         korisnici.Add(user[0], new Korisnik
                         {
                             Id = ++brojac,
@@ -49,7 +50,8 @@ namespace PR89_2017_KOL2.Helpers
 
         public static bool pisiKorisnika(Korisnik korisnik)
         {
-            using(System.IO.StreamWriter sw = System.IO.File.AppendText(pathKorisnik))
+
+            using (System.IO.StreamWriter sw = System.IO.File.AppendText(pathKorisnik))
             {
                 try
                 {
@@ -68,6 +70,8 @@ namespace PR89_2017_KOL2.Helpers
         public static List<Vozilo> citajVozila()
         {
             List<Vozilo> vozila = new List<Vozilo>();
+            if (!System.IO.File.Exists(pathVozilo))
+                System.IO.File.Create(pathVozilo);
             using (System.IO.StreamReader sr = System.IO.File.OpenText(pathVozilo))
             {
                 try
@@ -76,7 +80,7 @@ namespace PR89_2017_KOL2.Helpers
                     int brojac = 0;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        string[] vozilo = line.Split(',');
+                        string[] vozilo = line.Split('|');
                         vozila.Add(new Vozilo
                         {
                             Id = ++brojac,
@@ -88,16 +92,59 @@ namespace PR89_2017_KOL2.Helpers
                             Opis = vozilo[5],
                             VrstaGoriva = (Fuel)Enum.Parse(typeof(Fuel), vozilo[6]),
                             Cena = Double.Parse(vozilo[7]),
-                            NaStanju = bool.Parse(vozilo[8])
+                            NaStanju = bool.Parse(vozilo[8]),
+                            KupacId = Int32.Parse(vozilo[9])
+
                         });
                     }
                 }
                 catch (Exception e)
                 {
-                    //neka greska se desila
+                    Debug.WriteLine("exception se desio!!!");
                 }
             }
             return vozila;
+        }
+
+        public static bool pisiVozilo(Vozilo vozilo)
+        {
+  
+            using (System.IO.StreamWriter sw = System.IO.File.AppendText(pathVozilo))
+            {
+                try
+                {
+                    sw.WriteLine(vozilo.ToString());
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    //neka greska
+                    return false;
+                }
+            }
+        }
+        public static bool izmeniVozilo(List<Vozilo> vozila)
+        {
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(pathVozilo))
+            {
+                try
+                {
+                    for (int i = 0; i < vozila.Count; i++)
+                    {
+                        sw.WriteLine(vozila[i].ToString());
+                    }
+                    
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    //neka greska
+                    return false;
+                }
+            }
+            
         }
     }
 }
