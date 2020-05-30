@@ -24,7 +24,8 @@ namespace PR89_2017_KOL2
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/overwrite.css"));
         }
     }
 }

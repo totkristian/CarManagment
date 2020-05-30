@@ -141,6 +141,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\overwrite.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -174,6 +175,8 @@
     <Content Include="Views\Authentication\Register.cshtml" />
     <Content Include="Views\Cars\Cars.cshtml" />
     <Content Include="Views\Users\Users.cshtml" />
+    <Content Include="Views\Cars\AddCar.cshtml" />
+    <Content Include="Views\Cars\EditCar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

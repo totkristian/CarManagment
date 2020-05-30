@@ -47,8 +47,8 @@
         </div>
         <div class="col-md-3" >
             <form action="~/Cars/NadjiPoCeni" method="get">
-                <label>Od</label><input type="text" name="cenaOd" placeholder="0" style="width:50px; margin-left:5px;" />
-                <label>Do</label><input type="text" name="cenaDo" placeholder="0" style="width:50px; margin-left:5px;" /><br />
+                <label>Od</label><input type="number" min="0" name="cenaOd" placeholder="0" style="width:50px; margin-left:5px;" />
+                <label>Do</label><input type="number" min ="0" name="cenaDo" placeholder="0" style="width:50px; margin-left:5px;" /><br />
                 <input type="submit" value="Trazi" style="margin-left: 25px; margin-top:3px;" />
 
             </form>
@@ -72,15 +72,22 @@
                     <th>Broj vrata</th>
                     <th>Opis</th>
                     <th>Vrsta Goriva</th>
-                    <th>Cena</th>
-                    @if (korisnik != null)
+                    <th >Cena</th>
+                    @if (korisnik != null && korisnik.Uloga.Equals(Role.ADMINISTRATOR))
                     {
-                        if (korisnik.Uloga.Equals(Role.ADMINISTRATOR))
-                        {
-                            <th>Kupac</th>
-                        }
+                        <th >Kupac</th>
+                        <th class="text-center">Izmeni</th>
+
                     }
-                    <th class="text-center">Action</th>
+                    else if (korisnik != null && korisnik.Uloga.Equals(Role.KUPAC))
+                    {
+                        <th class="text-center">Kupi</th>
+                    }
+                    else
+                    {
+                        <!--OVO JE DIZAJNERSKI-->
+                        <th></th>
+                    }
                 </tr>
             </thead>
             @foreach (Vozilo vozilo in ViewBag.Vozila)
@@ -95,22 +102,50 @@
                     <td>@vozilo.Opis</td>
                     <td>@vozilo.VrstaGoriva</td>
                     <td>@vozilo.Cena</td>
-                    @if (korisnik != null)
+                    @if (korisnik != null && korisnik.Uloga.Equals(Role.ADMINISTRATOR))
                     {
-                        if (korisnik.Uloga.Equals(Role.ADMINISTRATOR))
-                        {
-                            IEnumerable<Korisnik> korisnici = ViewBag.Korisnici;
 
-                            Korisnik kupac = korisnici.Where(x => x.Id == vozilo.KupacId).SingleOrDefault();
-                            string k = (kupac == null) ? "Na prodaju" : kupac.KorisnickoIme;
-                            <th>@k</th>
-                            }
+                          IEnumerable<Korisnik> korisnici = ViewBag.Korisnici;
+
+                          Korisnik kupac = korisnici.Where(x => x.Id == vozilo.KupacId).SingleOrDefault();
+                          string k = (kupac == null) ? "Na prodaju" : kupac.KorisnickoIme;
+                          <th>@k</th>
                      }
 
-                    <td class="text-center"><a class= "btn btn-info btn-xs" href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                     <td class="text-center">
+                        @if (korisnik != null)
+                        {
+                            if (vozilo.NaStanju == true)
+                            {   <form action="BuyEditCar" method="post">
+                                        <input type="number" name="id" value=@vozilo.Id hidden />
+                                        @if (korisnik.Uloga.Equals(Role.KUPAC))
+                                        {
+                                            <div class="btn btn-success btn-xs">
+                                                <input type="submit" value="Kupi" name="button" style="background-color: transparent; border: none;" />
+                                                <span class="glyphicon glyphicon-plus-sign" ></span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="btn btn-info btn-xs">
+                                                <input type="submit" value="Izmeni" name="button" style="background-color: transparent; border: none;" />
+                                                <span class="glyphicon glyphicon-edit" ></span>
+                                            </div>
+                                        }
+                                </form>
+                            }
+                        }
+
+                     </td>
                 </tr>
             }
         </table>
-    </div>
+        
+            @if (korisnik != null && korisnik.Uloga.Equals(Role.ADMINISTRATOR))
+            {
+                <a href="AddCar" class="btn btn-md btn-primary pull-right">Dodaj novo vozilo</a>
+            }
+
+</div>
 </div>
 

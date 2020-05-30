@@ -1,2 +1,2 @@
-tot021,12345,Kristian,Tot,MUSKO,kristiantot20@gmail.com,07-21-1998,ADMINISTRATOR
-
+tot021|12345|Kristian|Tot|MUSKO|kristiantot20@gmail.com|07-21-1998|ADMINISTRATOR
+andrea|12345|andrea|tot|ZENSKO|andreatot20@gmail.com|5-4-2020|KUPAC
