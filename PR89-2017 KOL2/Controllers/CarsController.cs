@@ -15,9 +15,9 @@ namespace PR89_2017_KOL2.Controllers
         {
             Korisnik korisnik = (Korisnik)Session["korisnik"];
             List<Vozilo> vozila = null;
-            if (korisnik == null)  
+            if (korisnik == null || korisnik.Uloga.Equals(Role.KUPAC))
             {
-                //nije ulogovan korisnik
+                //nije ulogovan korisnik ili korisnik
                 vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.NaStanju == true).ToList<Vozilo>();
             }
             else if (korisnik.Uloga.Equals(Role.ADMINISTRATOR))
@@ -25,13 +25,8 @@ namespace PR89_2017_KOL2.Controllers
                 //administrator
                 vozila = (List<Vozilo>)HttpContext.Application["vozila"];
             }
-            else
-            {
-                //ulogovan kupac
-                vozila = (List<Vozilo>)HttpContext.Application["vozila"];
-                
-            }
-            
+
+
             ucitajOpcije();
             ViewBag.Vozila = vozila;
             return View();
@@ -40,7 +35,7 @@ namespace PR89_2017_KOL2.Controllers
         public ActionResult SortirajPoMarki(string marka, string trazi)
         {
             Korisnik korisnik = (Korisnik)Session["korisnik"];
-            List <Vozilo> vozila = null;
+            List<Vozilo> vozila = null;
             if (korisnik == null || korisnik.Uloga.Equals(Role.KUPAC))
             {
                 if (trazi.Contains("Trazi"))
@@ -82,7 +77,7 @@ namespace PR89_2017_KOL2.Controllers
                 }
                 else
                 {
-                    vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x=> x.NaStanju == true).OrderBy(x => !x.Model.Equals(model)).ToList<Vozilo>();
+                    vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.NaStanju == true).OrderBy(x => !x.Model.Equals(model)).ToList<Vozilo>();
                 }
             }
             else
@@ -96,7 +91,7 @@ namespace PR89_2017_KOL2.Controllers
                     vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).OrderBy(x => !x.Model.Equals(model)).ToList<Vozilo>();
                 }
             }
-            
+
             ViewBag.Vozila = vozila;
             ucitajOpcije();
             return View("Cars");
@@ -109,7 +104,7 @@ namespace PR89_2017_KOL2.Controllers
             {
                 if (cena.Equals("Rastuce"))
                 {
-                    vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x=>x.NaStanju==true).OrderBy(x => x.Cena).ToList<Vozilo>();
+                    vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.NaStanju == true).OrderBy(x => x.Cena).ToList<Vozilo>();
                 }
                 else if (cena.Equals("Opadajuce"))
                 {
@@ -135,7 +130,7 @@ namespace PR89_2017_KOL2.Controllers
                     vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).ToList<Vozilo>();
                 }
             }
-            
+
             ViewBag.Vozila = vozila;
             ucitajOpcije();
             return View("Cars");
@@ -145,20 +140,20 @@ namespace PR89_2017_KOL2.Controllers
         {
             Korisnik korisnik = (Korisnik)Session["korisnik"];
             List<Vozilo> vozila = null;
-  
-            if(cenaDo == 0)
+
+            if (cenaDo == 0)
             {
                 cenaDo = double.MaxValue;
             }
 
             if (korisnik == null || korisnik.Uloga.Equals(Role.KUPAC))
             {
-                vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x=> x.NaStanju == true).Where(x => x.Cena >= cenaOd && x.Cena <= cenaDo).ToList<Vozilo>();
+                vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.NaStanju == true).Where(x => x.Cena >= cenaOd && x.Cena <= cenaDo).ToList<Vozilo>();
             }
             else
             {
                 vozila = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.Cena >= cenaOd && x.Cena <= cenaDo).ToList<Vozilo>();
-            }  
+            }
             ViewBag.Vozila = vozila;
             ucitajOpcije();
             return View("Cars");
@@ -172,7 +167,7 @@ namespace PR89_2017_KOL2.Controllers
             ViewBag.Korisnici = ((Dictionary<string, Korisnik>)HttpContext.Application["korisnici"]).Values.ToList<Korisnik>();
 
             ViewBag.Marke = marke;
-            
+
             ViewBag.Modeli = modeli;
         }
 
@@ -187,7 +182,7 @@ namespace PR89_2017_KOL2.Controllers
             if (vozila.Count != 0)
             {
                 vozilo.Id = vozila.Select(x => x.Id).Max() + 1;
-                
+
             }
             else
             {
@@ -197,7 +192,7 @@ namespace PR89_2017_KOL2.Controllers
             vozilo.NaStanju = true;
             try
             {
-                
+
                 if (!CitanjePodataka.pisiVozilo(vozilo))
                 {
                     //neuspesno pisanje u fajl
@@ -209,11 +204,12 @@ namespace PR89_2017_KOL2.Controllers
                 ViewBag.Vozila = vozila;
                 return View("Cars");
             }
-            catch {
+            catch
+            {
                 ViewBag.Message = "Desila se greska pri dodavanju vozila, pokusajte ponovo!";
                 return View();
             }
-            
+
         }
 
         public ActionResult BuyEditCar(int id, string button)
@@ -226,34 +222,99 @@ namespace PR89_2017_KOL2.Controllers
             }
             else
             {
-                ViewBag.Vozila = (List<Vozilo>)HttpContext.Application["vozila"];
-                ucitajOpcije();
-                return View("Cars");
+                ViewBag.Vozilo = ((List<Vozilo>)HttpContext.Application["vozila"]).Where(x => x.Id == id).Select(x => x).SingleOrDefault();
+                return View("EditCar");
             }
         }
 
         [HttpPost]
-        public ActionResult EditCarMethod(Vozilo vozilo)
+        public ActionResult EditCarMethod(Vozilo vozilo, string submit)
         {
-           
+
             List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
-            try
+            if (submit.Equals("Otkazi"))
             {
-                vozilo.NaStanju = true;
-                vozilo.KupacId = -1;
-                int index = vozila.FindIndex(x => x.Id == vozilo.Id);
-                vozila[index] = vozilo;
-                if (!CitanjePodataka.izmeniVozilo(vozila))
-                    throw new Exception();
-                HttpContext.Application["vozila"] = vozila;
+                ViewBag.Vozila = vozila;
+                ucitajOpcije();
+                return View("Cars");
             }
-            catch
-            {
-                ViewBag.Message = "Desila se greska pri pisanju u fajl pokusajte ponovo!";
+            else {
+                try
+                {
+                    vozilo.NaStanju = true;
+                    vozilo.KupacId = -1;
+                    int index = vozila.FindIndex(x => x.Id == vozilo.Id);
+                    vozila[index] = vozilo;
+                    if (!CitanjePodataka.izmeniVozilo(vozila))
+                        throw new Exception();
+                    HttpContext.Application["vozila"] = vozila;
+                }
+                catch
+                {
+                    ViewBag.Message = "Desila se greska pri izmeni vozila!";
+                }
             }
             ucitajOpcije();
             ViewBag.Vozila = vozila;
             return View("Cars");
         }
+        [HttpPost]
+        public ActionResult BuyCar(Vozilo vozilo, string submit)
+        {
+            Kupovina kupovina = new Kupovina();
+            List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
+            if (submit.Equals("Otkazi"))
+            {
+                ViewBag.Vozila = vozila;
+                ucitajOpcije();
+                return View("Cars");
+            }
+            else
+            {
+                try
+                {
+                    int index = vozila.FindIndex(x => x.Id == vozilo.Id);
+                    vozilo.NaStanju = false;
+                    vozila[index] = vozilo;
+                    if (!CitanjePodataka.izmeniVozilo(vozila))
+                        throw new Exception();
+                    HttpContext.Application["vozila"] = vozila;
+                    kupovina.Id = CitanjePodataka.citajKupovinu().Select(x => x.Id).Max() + 1;
+                    kupovina.Kupac = (Korisnik)Session["korisnik"];
+                    kupovina.DatumKupovine = DateTime.Now.Date;
+                    kupovina._Vozilo = vozila[index];
+                    kupovina.NaplacenaCena = vozila[index].Cena;
+                    if (!CitanjePodataka.pisiKupovinu(kupovina))
+                        throw new Exception();
+
+
+                }
+                catch
+                {
+                    ViewBag.Message = "Desila se greska pri kupovini vozila vozila!";
+                }
+            }
+            ViewBag.Vozila = vozila;
+            ucitajOpcije();
+            return RedirectToAction("Cars");
+
+        }
+
+        public ActionResult MyCars()
+        {
+            Korisnik k = (Korisnik)Session["korisnik"];
+            if (k != null && k.Uloga.Equals(Role.KUPAC))
+            {
+                List<Kupovina> kupovina = CitanjePodataka.citajKupovinu();
+                ViewBag.Kupovine = CitanjePodataka.citajKupovinu().Where(x => x.Kupac.Id == k.Id).Select(x => x);
+                return View();
+            }
+            List<Vozilo> vozila = ((List<Vozilo>)HttpContext.Application["vozila"]);
+            ViewBag.Vozila = vozila;
+            ucitajOpcije();
+            return View("Cars");
+        }
     }
 }
+
+   

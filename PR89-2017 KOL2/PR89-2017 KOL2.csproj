@@ -177,6 +177,7 @@
     <Content Include="Views\Users\Users.cshtml" />
     <Content Include="Views\Cars\AddCar.cshtml" />
     <Content Include="Views\Cars\EditCar.cshtml" />
+    <Content Include="Views\Cars\MyCars.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

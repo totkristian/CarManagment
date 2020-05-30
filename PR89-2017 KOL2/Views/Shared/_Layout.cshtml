@@ -30,6 +30,10 @@
                     {
                         <li><a href="../Users/Users">Korisnici</a></li>
                     }
+                    @if(korisnik != null && korisnik.Uloga.Equals(Role.KUPAC))
+                    {
+                        <li><a href="../Cars/MyCars">Kupljena vozila</a></li>
+                    }
                     @if (korisnik == null)
                     {
                         <li><a href="../Authentication/Index">Login</a></li>

@@ -11,6 +11,7 @@ namespace PR89_2017_KOL2.Helpers
     {
         public static string pathKorisnik = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/App_Data/Korisnici.txt";
         public static string pathVozilo = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/App_Data/Vozila.txt";
+        public static string pathKupovina = $"{System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)}/App_Data/Kupovina.txt";
 
         public static Dictionary<String,Korisnik> citajKorisnike()
         {
@@ -145,6 +146,70 @@ namespace PR89_2017_KOL2.Helpers
                 }
             }
             
+        }
+
+        public static List<Kupovina> citajKupovinu()
+        {
+            List<Kupovina> kupovina = new List<Kupovina>();
+            if (!System.IO.File.Exists(pathKupovina))
+            {
+                System.IO.File.Create(pathKupovina);
+                return kupovina;
+            }
+                
+            using (System.IO.StreamReader sr = System.IO.File.OpenText(pathKupovina))
+            {
+                try
+                {
+                    string line = "";
+                    int brojac = 0;
+                    
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] kup = line.Split('|');
+                        Kupovina kupac = new Kupovina();
+                        kupac.Id = ++brojac;
+                        kupac.Kupac = citajKorisnike().Values.Where(k => k.Id == Int32.Parse(kup[0])).Select(k => k).SingleOrDefault();
+                        kupac._Vozilo = citajVozila().Where(v => v.Id == Int32.Parse(kup[1])).Select(v => v).SingleOrDefault();
+                        kupac.DatumKupovine = DateTime.Parse(kup[2]);
+                        kupac.NaplacenaCena = double.Parse(kup[3]);
+                        kupovina.Add(kupac);
+                        /*kupovina.Add(new Kupovina {
+                            Id = ++brojac,
+                            Kupac = ((List<Korisnik>)HttpContext.Current.Application["korisnici"]).Where(k => k.Id == Int32.Parse(kup[1])).Select(k => k).SingleOrDefault(),
+                            _Vozilo = ((List<Vozilo>)HttpContext.Current.Application["vozila"]).Where(v=>v.Id == Int32.Parse(kup[2])).Select(v=>v).SingleOrDefault(),
+                            DatumKupovine = DateTime.Parse(kup[3]),
+                            NaplacenaCena = double.Parse(kup[4])
+
+                        }); */
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    //neka greska
+                }
+            }
+            return kupovina;
+        }
+
+        public static bool pisiKupovinu(Kupovina kupovina)
+        {
+
+            using (System.IO.StreamWriter sw = System.IO.File.AppendText(pathKupovina))
+            {
+                try
+                {
+                    sw.WriteLine(kupovina.ToString());
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    //neka greska
+                    return false;
+                }
+            }
         }
     }
 }

@@ -1,30 +1,83 @@
 ﻿@using PR89_2017_KOL2.Models
 @{
     ViewBag.Title = "EditCar";
+
+}
+@functions
+{
+            private object GetAttributes()
+            {
+                Korisnik k = (Korisnik)Session["korisnik"];
+                if (k != null && k.Uloga.Equals(Role.KUPAC))
+                {
+                    return new { @readonly = "readonly" };
+                }
+
+                return null;
+            }
+
+            private object GetAction()
+            {
+                Korisnik k = (Korisnik)Session["korisnik"];
+                if (k != null && k.Uloga.Equals(Role.KUPAC))
+                {
+                    return new { Action = "BuyCar" };
+                }
+
+                return new {Action = "EditCarMethod"};
+            }
+
+        }
+@{ Korisnik k = (Korisnik)Session["korisnik"]; }
+
+    @if (k != null && k.Uloga.Equals(Role.ADMINISTRATOR))
+    {
+    <h2>Izmeni vozilo</h2>
+    }
+else
+{
+    <h2>Kupi vozilo</h2>
 }
 
-<h2>Edit Car</h2>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="form_main">
-                <h4 class="heading"><strong>Dodaj</strong> vozilo </h4>
+
+                @if (k != null && k.Uloga.Equals(Role.ADMINISTRATOR))
+    {
+                    <h4 class="heading">
+                        <strong>Izmeni</strong> vozilo
+                    </h4>
+                }
+                else
+                {
+                    <h4 class="heading">
+                        <strong>Kupi</strong> vozilo
+                    </h4>
+                }
+
                 <div class="form">
                     @{Vozilo vozilo = ViewBag.Vozilo; }
-                    <form action="EditCarMethod" method="post">
-                        <input type="number" value="@vozilo.Id" name="id" hidden />
-                        <input type="text" placeholder="Marka" value="@vozilo.Marka" name="marka" class="txt">
-                        <input type="text" placeholder="Model" value="@vozilo.Model" name="model" class="txt">
-                        <input type="text" placeholder="Oznaka sasije" value="@vozilo.OznakaSasije" name="oznakaSasije" class="txt">
-                        <input type="text" placeholder="Boja" value="@vozilo.Boja" name="boja" class="txt">
-                        <input type="text" placeholder="Broj vrata" value="@vozilo.BrojVrata" name="brojVrata" class="txt">
-                        <input type="text" placeholder="Cena" value="@vozilo.Cena" name="cena" class="txt">
-                        <select class="form-control" id="vrstaGoriva" name="vrstaGoriva">
+                    <form @GetAction() method="post">
+                        <input type="number" value="@vozilo.Id" name="id" hidden @GetAttributes() />
+                        <input type="number" value="@k.Id" name="kupacId" hidden @GetAttributes() />
+                        <input type="text" placeholder="Marka" value="@vozilo.Marka" name="marka" class="txt" @GetAttributes()>
+                        <input type="text" placeholder="Model" value="@vozilo.Model" name="model" class="txt" @GetAttributes()>
+                        <input type="text" placeholder="Oznaka sasije" value="@vozilo.OznakaSasije" name="oznakaSasije" class="txt" @GetAttributes()>
+                        <input type="text" placeholder="Boja" value="@vozilo.Boja" name="boja" class="txt" @GetAttributes()>
+                        <input type="text" placeholder="Broj vrata" value="@vozilo.BrojVrata" name="brojVrata" class="txt" @GetAttributes()>
+                        <input type="text" placeholder="Cena" value="@vozilo.Cena" name="cena" class="txt" @GetAttributes()>
+                        <select class="form-control" id="vrstaGoriva" name="vrstaGoriva" @GetAttributes()>
                             @foreach (Fuel f in Enum.GetValues(typeof(Fuel)))
                             {
                                 if (vozilo.VrstaGoriva.Equals(f))
                                 {
                                     <option selected="selected">@f</option>
+                                }
+                                else if (k != null && k.Uloga.Equals(Role.KUPAC))
+                                {
+                                    <option disabled>@f</option>
                                 }
                                 else
                                 {
@@ -33,8 +86,16 @@
                             }
 
                         </select>
-                        <textarea placeholder="Opis" name="opis" type="text" class="txt_3">@vozilo.Opis</textarea>
-                        <input type="submit" value="submit" name="submit" class="txt2">
+                        <textarea placeholder="Opis" name="opis" type="text" class="txt_3" @GetAttributes()>@vozilo.Opis</textarea>
+                        @if (k != null && k.Uloga.Equals(Role.KUPAC))
+                        {
+                            <input type="submit" value="Kupi" name="submit" class="txt2" style="margin-left:1em;">
+                        }
+                        else
+                        {
+                            <input type="submit" value="Izmeni" name="submit" class="txt2" style="margin-left:1em;" />
+                        }
+                        <input type="submit" value="Otkazi" name="submit" class="txt2" style="margin-left:1em;" />
                     </form>
                 </div>
             </div>

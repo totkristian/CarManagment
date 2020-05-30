@@ -46,6 +46,7 @@ namespace PR89_2017_KOL2.Controllers
         {
             Dictionary<string, Korisnik> korisnici = (Dictionary<string, Korisnik>)HttpContext.Application["korisnici"];
             Korisnik korisnik = korisnici.Where(x => x.Value.KorisnickoIme.Equals(korisnickoIme) && x.Value.Lozinka.Equals(lozinka)).Select(x => x.Value).SingleOrDefault();
+            
 
             if(korisnik == null)
             {
