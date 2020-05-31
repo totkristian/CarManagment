@@ -11,32 +11,41 @@ namespace PR89_2017_KOL2.Models
         
         private int id;
 
-        [Required(ErrorMessage ="Korisnicko ime je obavezno!"),MinLength(3)]
+        
         private string korisnickoIme;
-        [Required(ErrorMessage = "Lozinka je obavezna!")]
-        [RegularExpression(@"[a-zA-Z0-9]{8,}",ErrorMessage ="Mora biti minimum 8 karaktera!")]
+
         private string lozinka;
-        [Required(ErrorMessage = "Ime je obavezno!")]
+        
         private string ime;
-        [Required(ErrorMessage = "Prezime je obavezno!")]
+        
         private string prezime;
-        [Required(ErrorMessage = "Pol je obavezan!")]
+        
         private Sex pol;
-        [Required(ErrorMessage = "Email je obavezan!")]
+
         private string email;
-        [Required(ErrorMessage = "Datum rodjenja je obavezan!")]
+        
         private DateTime datumRodjenja;
         private Role uloga;
         private bool obrisan = false;
 
         
         public int Id { get => id; set => id = value; }
+        [Required(ErrorMessage = "Korisnicko ime je obavezno!"), MinLength(3)]
         public string KorisnickoIme { get => korisnickoIme; set => korisnickoIme = value; }
+        [Required(ErrorMessage = "Lozinka je obavezna!")]
+        [RegularExpression(@"[a-zA-Z0-9]{8,}", ErrorMessage = "Mora biti minimum 8 karaktera!")]
         public string Lozinka { get => lozinka; set => lozinka = value; }
+        [Required(ErrorMessage = "Ime je obavezno!")]
         public string Ime { get => ime; set => ime = value; }
+        [Required(ErrorMessage = "Prezime je obavezno!")]
         public string Prezime { get => prezime; set => prezime = value; }
+        [Required(ErrorMessage = "Pol je obavezan!")]
         public Sex Pol { get => pol; set => pol = value; }
+        [Required(ErrorMessage = "Email je obavezan!")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get => email; set => email = value; }
+        [Required(ErrorMessage = "Datum je obavezan!")]
         public DateTime DatumRodjenja { get => datumRodjenja; set => datumRodjenja = value; }
         public Role Uloga { get => uloga; set => uloga = value; }
         public bool Obrisan { get => obrisan; set => obrisan = value; }

@@ -179,6 +179,11 @@ namespace PR89_2017_KOL2.Controllers
         [HttpPost]
         public ActionResult AddCar(Vozilo vozilo)
         {
+            if(!ModelState.IsValid)
+            {
+                setErrorMessages(vozilo);
+                return View();
+            }
             List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];         
             vozilo.Id = vozila.Count == 0 ? 1 : vozila.Select(x => x.Id).Max() + 1;
             vozilo.KupacId = -1;
@@ -203,6 +208,55 @@ namespace PR89_2017_KOL2.Controllers
                 return View();
             }
 
+        }
+
+        private void setErrorMessages(Vozilo vozilo)
+        {
+            if (String.IsNullOrEmpty(vozilo.Marka))
+            {
+                ViewBag.MarMsg = "Marka je obavezna!";
+            }
+            else if(vozilo.Marka.Length<3)
+            {
+                ViewBag.MarMsg = "Marka nije validna!";
+            }
+
+            if (String.IsNullOrWhiteSpace(vozilo.Model))
+            {
+                ViewBag.ModMsg = "Model je obavezan!";
+
+            }
+            if(String.IsNullOrWhiteSpace(vozilo.Opis))
+            {
+                ViewBag.OpMsg = "Opis je obavezan!";
+            }
+            if(String.IsNullOrWhiteSpace(vozilo.OznakaSasije))
+            {
+                ViewBag.OzMsg = "Oznaka sasije je obavezna!";
+            }
+            if (String.IsNullOrWhiteSpace(vozilo.Boja))
+            {
+                ViewBag.BoMsg = "Boja je obavezna!";
+            }
+
+            if(vozilo.BrojVrata <= 0 || vozilo.BrojVrata > 5)
+            {
+                ViewBag.BrMsg = "Nije validan broj vrata";
+            }
+
+            if(vozilo.Cena <= 0)
+            {
+                ViewBag.CeMsg = "Nije validna cena vozila";
+            }
+            if(!vozilo.VrstaGoriva.Equals(Fuel.BENZIN) && 
+                !vozilo.VrstaGoriva.Equals(Fuel.BENZIN_GAS) && 
+                !vozilo.VrstaGoriva.Equals(Fuel.DIZEL) && 
+                !vozilo.VrstaGoriva.Equals(Fuel.ELEKTRICNI_POGON) &&
+                !vozilo.VrstaGoriva.Equals(Fuel.HIBRIDNI_POGON) &&
+                !vozilo.VrstaGoriva.Equals(Fuel.METAN))
+            {
+                ViewBag.VrMsg = "Nije validna vrsta goriva!";
+            }
         }
 
         public ActionResult BuyEditCar(int id, string button)
@@ -234,6 +288,12 @@ namespace PR89_2017_KOL2.Controllers
             else {
                 try
                 {
+                    if (!ModelState.IsValid)
+                    {
+                        setErrorMessages(vozilo);
+                        ViewBag.Vozilo = vozilo;
+                        return View("EditCar");
+                    }
                     vozilo.NaStanju = true;
                     vozilo.KupacId = -1;
                     int index = vozila.FindIndex(x => x.Id == vozilo.Id);

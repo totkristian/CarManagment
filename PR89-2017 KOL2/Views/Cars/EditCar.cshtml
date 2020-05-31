@@ -55,13 +55,32 @@
                     <form @GetAction() method="post">
                         <input type="number" value="@vozilo.Id" name="id" hidden @GetAttributes() />
                         <input type="number" value="@k.Id" name="kupacId" hidden @GetAttributes() />
-                        <input type="text" placeholder="Marka" value="@vozilo.Marka" name="marka" class="txt" @GetAttributes()>
-                        <input type="text" placeholder="Model" value="@vozilo.Model" name="model" class="txt" @GetAttributes()>
-                        <input type="text" placeholder="Oznaka sasije" value="@vozilo.OznakaSasije" name="oznakaSasije" class="txt" @GetAttributes()>
-                        <input type="text" placeholder="Boja" value="@vozilo.Boja" name="boja" class="txt" @GetAttributes()>
-                        <input type="text" placeholder="Broj vrata" value="@vozilo.BrojVrata" name="brojVrata" class="txt" @GetAttributes()>
-                        <input type="text" placeholder="Cena" value="@vozilo.Cena" name="cena" class="txt" @GetAttributes()>
+                        <input type="text" placeholder="Marka" value="@vozilo.Marka" name="marka" class="txt" @GetAttributes()><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.MarMsg
+                        </span>
+                        <input type="text" placeholder="Model" value="@vozilo.Model" name="model" class="txt" @GetAttributes()><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.ModMsg
+                        </span>
+                        <input type="text" placeholder="Oznaka sasije" value="@vozilo.OznakaSasije" name="oznakaSasije" class="txt" @GetAttributes()><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.OzMsg
+                        </span>
+                        <input type="text" placeholder="Boja" value="@vozilo.Boja" name="boja" class="txt" @GetAttributes()><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.BoMsg
+                        </span>
+                        <input type="text" placeholder="Broj vrata" value="@vozilo.BrojVrata" name="brojVrata" class="txt" @GetAttributes()><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.BrMsg
+                        </span>
+                        <input type="text" placeholder="Cena" value="@vozilo.Cena" name="cena" class="txt" @GetAttributes()><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.CeMsg
+                        </span>
                         <select class="form-control" id="vrstaGoriva" name="vrstaGoriva" @GetAttributes()>
+
                             @foreach (Fuel f in Enum.GetValues(typeof(Fuel)))
                             {
                                 if (vozilo.VrstaGoriva.Equals(f))
@@ -78,8 +97,18 @@
                                 }
                             }
 
-                        </select>
-                        <textarea placeholder="Opis" name="opis" type="text" class="txt_3" @GetAttributes()>@vozilo.Opis</textarea>
+                        </select><br />
+                        <span class="field-validation-valid text-danger">
+                            @ViewBag.VrMsg
+                        </span>
+                        <textarea placeholder="Opis" name="opis" type="text" class="txt_3" @GetAttributes()>@vozilo.Opis</textarea><br />
+                        <span class="field-validation-valid text-danger">
+                            @if (!String.IsNullOrEmpty(ViewBag.OpMsg))
+                            {
+                                @ViewBag.OpMsg <br />
+                            }
+                        </span>
+
                         @if (k != null && k.Uloga.Equals(Role.KUPAC))
                         {
                             <input type="submit" value="Kupi" name="submit" class="txt2" style="margin-left:1em;">
