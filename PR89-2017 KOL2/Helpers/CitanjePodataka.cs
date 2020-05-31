@@ -68,6 +68,28 @@ namespace PR89_2017_KOL2.Helpers
                 }
             }
         }
+        public static bool izmeniKorisnika(Dictionary<string,Korisnik> korisnici)
+        {
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(pathKorisnik))
+            {
+                try
+                {
+                    foreach(Korisnik korisnik in korisnici.Values)
+                    {
+                        sw.WriteLine(korisnik.ToString());
+                    }
+
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    //neka greska
+                    return false;
+                }
+            }
+
+        }
 
         public static List<Vozilo> citajVozila()
         {
