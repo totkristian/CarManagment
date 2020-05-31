@@ -24,7 +24,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="../Home/Index">Home</a></li>
                     <li><a href="../Cars/Cars">Automobili</a></li>
                     @if (korisnik != null && korisnik.Uloga.Equals(Role.ADMINISTRATOR))
                     {
@@ -34,6 +33,8 @@
                     {
                         <li><a href="../Cars/MyCars">Kupljena vozila</a></li>
                     }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     @if (korisnik == null)
                     {
                         <li><a href="../Authentication/Index">Login</a></li>

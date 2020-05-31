@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Korisnici.txt" />
+    <Content Include="App_Data\Kupovina.txt" />
     <Content Include="App_Data\Vozila.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

@@ -405,7 +405,14 @@ namespace PR89_2017_KOL2.Controllers
                 try
                 {
                     List<Kupovina> kupovina = CitanjePodataka.citajKupovinu();
-                    ViewBag.Kupovine = CitanjePodataka.citajKupovinu().Where(x => x.Kupac.Id == k.Id).Select(x => x);
+                    if (kupovina.Count < 1)
+                    {
+                        ViewBag.Kupovine = kupovina;
+                    }
+                    else
+                    {
+                        ViewBag.Kupovine = CitanjePodataka.citajKupovinu().Where(x => x.Kupac.Id == k.Id).Select(x => x);
+                    }
                     return View();
                 }
                 catch (Exception ex)

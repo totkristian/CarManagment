@@ -1,6 +1,0 @@
-FICA|asd|asd|plkav|21|asdas|BENZIN_GAS|123|True|-1
-cao|cao|cao|palva|5|asdasdasd|METAN|100|True|-1
-FICA|mmmm|5asd54|CRNA|3|Zuta boja skroz dobra ne rdja ni mali|BENZIN|1000|True|-1
-Opel|Astra|asdaskdjaskd|crna|2|Nije rdjav jos, motor u ok stanju|DIZEL|1500|True|-1
-Citroen|Xsara picaso|TOTOTOTOTO|Siva|1|NAJBOLJI |DIZEL|1700|True|-1
-asd|asd|asd|asd|4|asd|HIBRIDNI_POGON|23|False|2

@@ -18,7 +18,11 @@ namespace PR89_2017_KOL2.Helpers
             Dictionary<String, Korisnik> korisnici = new Dictionary<string, Korisnik>();
 
             if (!System.IO.File.Exists(pathKorisnik))
-                System.IO.File.Create(pathKorisnik);
+            {
+                var file = System.IO.File.Create(pathKorisnik);
+                file.Close();
+                return korisnici;
+            }
             using (System.IO.StreamReader sr = System.IO.File.OpenText(pathKorisnik))
             {
                 try
@@ -95,7 +99,11 @@ namespace PR89_2017_KOL2.Helpers
         {
             List<Vozilo> vozila = new List<Vozilo>();
             if (!System.IO.File.Exists(pathVozilo))
-                System.IO.File.Create(pathVozilo);
+            {
+                var file =System.IO.File.Create(pathVozilo);
+                file.Close();
+                return vozila;
+            }
             using (System.IO.StreamReader sr = System.IO.File.OpenText(pathVozilo))
             {
                 try
@@ -176,10 +184,11 @@ namespace PR89_2017_KOL2.Helpers
             List<Kupovina> kupovina = new List<Kupovina>();
             if (!System.IO.File.Exists(pathKupovina))
             {
-                System.IO.File.Create(pathKupovina);
+               var file = System.IO.File.Create(pathKupovina);
+                file.Close();
                 return kupovina;
             }
-                
+
             using (System.IO.StreamReader sr = System.IO.File.OpenText(pathKupovina))
             {
                 try
