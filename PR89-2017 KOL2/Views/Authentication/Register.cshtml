@@ -3,44 +3,43 @@
     ViewBag.Title = "Registration";
 }
 
-<h2>Registration</h2>
+
 
 <div>
     @ViewBag.Message
 </div>
-<form action="Register" method="post">
+@*<form action="Register" method="post">
     <table>
         <tr>
             <td>Korisnicko ime:</td>
-            <td><input type="text" name="korisnickoIme" required/></td>
+            <td><input type="text" name="korisnickoIme" class="txt" placeholder="Korisnicko ime"/></td>
         </tr>
         <tr>
             <td>Lozinka:</td>
-            <td><input type="password" name="lozinka" required/></td>
+            <td><input type="password" name="lozinka" class="txt" placeholder="Lozinka"/></td>
         </tr>
         <tr>
             <td>Ime:</td>
-            <td><input type="text" name="ime" required/></td>
+            <td></td>
         </tr>
         <tr>
             <td>Prezime:</td>
-            <td><input type="text" name="prezime" required/></td>
+            <td></td>
         </tr>
         <tr>
             <td>Pol:</td>
             <td>
-                Musko<input type="radio" name="pol" value="MUSKO" checked/>
-                Zensko<input type="radio" name="pol" value="ZENSKO"/>
+               
             </td>
         </tr>
         <tr>
             <td>Email:</td>
-            <td><input type="text" name="email" required/></td>
+            <td></td>
         </tr>
         <tr>
             <td>Datum rodjenja:</td>
-            <!--Add todays date for max value and for inital value do the same-->
-            <td><input type="date" name="datumRodjenja" min="1914-01-01" max="2020-05-26" required></td>
+            
+            <td></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -48,5 +47,36 @@
             </td>
         </tr>
     </table>
-</form>
+</form>*@
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form_main">
+                <h4 class="heading"><strong>Registracija</strong></h4>
+                <div class="form">
+                    <form action="Register" method="post">
+                        <input type="text" name="korisnickoIme" class="txt" placeholder="Korisnicko ime" />
+                        <input type="password" name="lozinka" class="txt" placeholder="Lozinka" />
+                        <input type="text" name="ime" class="txt" placeholder="Ime" />
+                        <input type="text" name="prezime" class="txt" placeholder="Prezime" />
+
+                        <input type="text" name="email" class="txt" placeholder="Email" /> <br />
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="pol" id="inlineRadio1" value="MUSKO" checked>
+                            <label class="form-check-label" for="inlineRadio1">Musko</label>
+                            <input class="form-check-input" type="radio" name="pol" id="inlineRadio2" value="ZENSKO">
+                            <label class="form-check-label" for="inlineRadio2">Zensko</label>
+                        </div>
+
+
+                        <input type="date" name="datumRodjenja" min="1914-01-01" max="2020-05-26" class="txt"> <br />
+                        <input type="submit" value="Registruj se" name="submit" class="txt2 txt2MOJ"  >
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
