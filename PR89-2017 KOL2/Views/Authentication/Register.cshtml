@@ -48,7 +48,7 @@
                         <span class="field-validation-valid text-danger">
                             @ViewBag.PolMsg
                         </span>
-                        <input type="date" name="datumRodjenja"  placeholder="dd-mm-yyyy" class="txt"> <br />
+                        <input type="date" name="datumRodjenja" min="1914-01-01" max="@DateTime.Today.Date.ToString("yyyy-MM-dd")"  placeholder="dd-mm-yyyy" class="txt"> <br />
                         <span class="field-validation-valid text-danger">
                             @if (!String.IsNullOrEmpty(ViewBag.DatMsg))
                             {

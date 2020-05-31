@@ -1,0 +1,1 @@
+Audi|Q8|SASIJA1|Plava|5|Neki opis|BENZIN|1500|False|3
