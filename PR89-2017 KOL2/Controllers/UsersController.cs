@@ -59,7 +59,6 @@ namespace PR89_2017_KOL2.Controllers
                     ViewBag.Message("Taj korisnik ne postoji!");
                 }
             }
-           
             ViewBag.Korisnici = korisnici.Values.Where(x => x.Obrisan == false).Select(x => x);
             return View("Users");
         }
