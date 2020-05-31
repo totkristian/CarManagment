@@ -5,9 +5,12 @@
 
 <h2>Korisnici</h2>
 
-<div>
-    @ViewBag.Message
-</div>
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+}
 <div>
     <div class="container">
         <div class="row col-lg-12 col-md-offset custyle">
@@ -43,14 +46,14 @@
                             <form action="deleteUser" method="delete">
                                 <div class="btn btn-danger btn-xs">
                                     <input type="text" name="korIme" value=@korisnik.KorisnickoIme hidden><span class="glyphicon glyphicon-remove"></span>
-                                    <input type="submit" value="Delete" style="background-color: transparent; border: none;"/>
+                                    <input type="submit" value="Delete" style="background-color: transparent; border: none;" />
                                 </div>
                             </form>
                         </td>
-                     
+
                     </tr>
 
-                    }
+                }
             </table>
         </div>
     </div>

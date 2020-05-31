@@ -66,4 +66,7 @@
 .txt2MOJ[type="submit"] {
     width: 40%;
 }
-
+.alert, alert-danger {
+    margin-top: 2px;
+    width: 50%;
+}

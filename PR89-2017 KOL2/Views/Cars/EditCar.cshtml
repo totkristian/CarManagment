@@ -5,32 +5,37 @@
 }
 @functions
 {
-            private object GetAttributes()
-            {
-                Korisnik k = (Korisnik)Session["korisnik"];
-                if (k != null && k.Uloga.Equals(Role.KUPAC))
-                {
-                    return new { @readonly = "readonly" };
-                }
-
-                return null;
-            }
-
-            private object GetAction()
-            {
-                Korisnik k = (Korisnik)Session["korisnik"];
-                if (k != null && k.Uloga.Equals(Role.KUPAC))
-                {
-                    return new { Action = "BuyCar" };
-                }
-
-                return new {Action = "EditCarMethod"};
-            }
-
+    private object GetAttributes()
+    {
+        Korisnik k = (Korisnik)Session["korisnik"];
+        if (k != null && k.Uloga.Equals(Role.KUPAC))
+        {
+            return new { @readonly = "readonly" };
         }
+
+        return null;
+    }
+
+    private object GetAction()
+    {
+        Korisnik k = (Korisnik)Session["korisnik"];
+        if (k != null && k.Uloga.Equals(Role.KUPAC))
+        {
+            return new { Action = "BuyCar" };
+        }
+
+        return new { Action = "EditCarMethod" };
+    }
+
+}
 @{ Korisnik k = (Korisnik)Session["korisnik"]; }
 
-
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+}
 
 <div class="container">
     <div class="row">
@@ -38,7 +43,7 @@
             <div class="form_main">
 
                 @if (k != null && k.Uloga.Equals(Role.ADMINISTRATOR))
-    {
+                {
                     <h4 class="heading">
                         <strong>Izmeni</strong> vozilo
                     </h4>

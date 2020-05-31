@@ -3,9 +3,12 @@
     ViewBag.Title = "Registration";
 }
 
-<div>
-    @ViewBag.Message
-</div>
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+}
 
 
 <div class="container">
@@ -47,10 +50,10 @@
                         </span>
                         <input type="date" name="datumRodjenja" min="1914-01-01" max="@DateTime.Now.ToString("yyyy/mm/dd")" class="txt"> <br />
                         <span class="field-validation-valid text-danger">
-                           @if(!String.IsNullOrEmpty(ViewBag.DatMsg))
-                           {
-                               @ViewBag.DatMsg <br />
-                           }
+                            @if (!String.IsNullOrEmpty(ViewBag.DatMsg))
+                            {
+                                @ViewBag.DatMsg <br />
+                            }
                         </span>
                         <input type="submit" value="Registruj se" name="submit" class="txt2 txt2MOJ">
 

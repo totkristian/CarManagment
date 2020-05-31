@@ -4,9 +4,12 @@
 }
 
 
-<div>
-    @ViewBag.Message
-</div>
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+}
 
 <div class="container">
     <div class="row">
@@ -15,27 +18,27 @@
                 <h4 class="heading"><strong>Dodaj</strong> vozilo </h4>
                 <div class="form">
                     <form action="AddCar" method="post">
-                        <input type="text"  placeholder="Marka" value="" name="marka" class="txt"><br />
+                        <input type="text" placeholder="Marka" value="" name="marka" class="txt"><br />
                         <span class="field-validation-valid text-danger">
                             @ViewBag.MarMsg
                         </span>
-                        <input type="text"  placeholder="Model" value="" name="model" class="txt"><br />
+                        <input type="text" placeholder="Model" value="" name="model" class="txt"><br />
                         <span class="field-validation-valid text-danger">
                             @ViewBag.ModMsg
                         </span>
-                        <input type="text"  placeholder="Oznaka sasije" value="" name="oznakaSasije" class="txt"><br />
+                        <input type="text" placeholder="Oznaka sasije" value="" name="oznakaSasije" class="txt"><br />
                         <span class="field-validation-valid text-danger">
                             @ViewBag.OzMsg
                         </span>
-                        <input type="text"  placeholder="Boja" value="" name="boja" class="txt"><br />
+                        <input type="text" placeholder="Boja" value="" name="boja" class="txt"><br />
                         <span class="field-validation-valid text-danger">
                             @ViewBag.BoMsg
                         </span>
-                        <input type="number"  placeholder="Broj vrata" value="" name="brojVrata" class="txt"><br />
+                        <input type="number" placeholder="Broj vrata" value="" name="brojVrata" class="txt"><br />
                         <span class="field-validation-valid text-danger">
                             @ViewBag.BrMsg
                         </span>
-                        <input type="number"  placeholder="Cena" value="" name="cena" class="txt"><br />
+                        <input type="number" placeholder="Cena" value="" name="cena" class="txt"><br />
                         <span class="field-validation-valid text-danger">
                             @ViewBag.CeMsg
                         </span>
@@ -52,10 +55,10 @@
                         </span>
                         <textarea placeholder="Opis" name="opis" type="text" class="txt_3"></textarea><br />
                         <span class="field-validation-valid text-danger">
-                            @if(!String.IsNullOrEmpty(ViewBag.OpMsg))
-                           {
-                               @ViewBag.OpMsg <br />
-                           }
+                            @if (!String.IsNullOrEmpty(ViewBag.OpMsg))
+                            {
+                                @ViewBag.OpMsg <br />
+                            }
                         </span>
                         <input type="submit" value="submit" name="submit" class="txt2">
                     </form>
