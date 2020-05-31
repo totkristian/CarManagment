@@ -22,7 +22,7 @@ namespace PR89_2017_KOL2.Models
 
         public override string ToString()
         {
-            return $"{Kupac.Id}|{_Vozilo.Id}|{DatumKupovine}|{NaplacenaCena}";
+            return $"{Kupac.Id}|{_Vozilo.Id}|{DatumKupovine.ToString("dd/MM/yyyy")}|{NaplacenaCena}";
         }
     }
 }

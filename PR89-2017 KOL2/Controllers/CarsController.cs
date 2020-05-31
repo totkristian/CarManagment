@@ -2,6 +2,7 @@
 using PR89_2017_KOL2.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -178,16 +179,8 @@ namespace PR89_2017_KOL2.Controllers
         [HttpPost]
         public ActionResult AddCar(Vozilo vozilo)
         {
-            List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
-            if (vozila.Count != 0)
-            {
-                vozilo.Id = vozila.Select(x => x.Id).Max() + 1;
-
-            }
-            else
-            {
-                vozilo.Id = 1;
-            }
+            List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];         
+            vozilo.Id = vozila.Count == 0 ? 1 : vozila.Select(x => x.Id).Max() + 1;
             vozilo.KupacId = -1;
             vozilo.NaStanju = true;
             try
@@ -279,7 +272,8 @@ namespace PR89_2017_KOL2.Controllers
                     if (!CitanjePodataka.izmeniVozilo(vozila))
                         throw new Exception();
                     HttpContext.Application["vozila"] = vozila;
-                    kupovina.Id = CitanjePodataka.citajKupovinu().Select(x => x.Id).Max() + 1;
+                    List<Kupovina> k = CitanjePodataka.citajKupovinu();
+                    kupovina.Id = k.Count == 0 ? 1 : k.Select(x=>x.Id).Max() + 1;
                     kupovina.Kupac = (Korisnik)Session["korisnik"];
                     kupovina.DatumKupovine = DateTime.Now.Date;
                     kupovina._Vozilo = vozila[index];
@@ -289,8 +283,9 @@ namespace PR89_2017_KOL2.Controllers
 
 
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Debug.WriteLine(ex);
                     ViewBag.Message = "Desila se greska pri kupovini vozila vozila!";
                 }
             }

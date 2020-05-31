@@ -36,14 +36,14 @@ namespace PR89_2017_KOL2.Helpers
                             Prezime = user[3],
                             Pol = (Sex)Enum.Parse(typeof(Sex), user[4]),
                             Email = user[5],
-                            DatumRodjenja = DateTime.Parse(user[6]),
+                            DatumRodjenja = DateTime.ParseExact(user[6], "d/M/yyyy", System.Globalization.CultureInfo.InvariantCulture),
                             Uloga = (Role)Enum.Parse(typeof(Role), user[7])
                         });
                     }
                 }
                 catch(Exception e)
                 {
-                    //neka greska se desila
+                    Debug.WriteLine(e);
                 }
             }
             return korisnici;
@@ -168,20 +168,15 @@ namespace PR89_2017_KOL2.Helpers
                     {
                         string[] kup = line.Split('|');
                         Kupovina kupac = new Kupovina();
-                        kupac.Id = ++brojac;
-                        kupac.Kupac = citajKorisnike().Values.Where(k => k.Id == Int32.Parse(kup[0])).Select(k => k).SingleOrDefault();
-                        kupac._Vozilo = citajVozila().Where(v => v.Id == Int32.Parse(kup[1])).Select(v => v).SingleOrDefault();
-                        kupac.DatumKupovine = DateTime.Parse(kup[2]);
-                        kupac.NaplacenaCena = double.Parse(kup[3]);
-                        kupovina.Add(kupac);
-                        /*kupovina.Add(new Kupovina {
+     
+                        kupovina.Add(new Kupovina {
                             Id = ++brojac,
-                            Kupac = ((List<Korisnik>)HttpContext.Current.Application["korisnici"]).Where(k => k.Id == Int32.Parse(kup[1])).Select(k => k).SingleOrDefault(),
-                            _Vozilo = ((List<Vozilo>)HttpContext.Current.Application["vozila"]).Where(v=>v.Id == Int32.Parse(kup[2])).Select(v=>v).SingleOrDefault(),
-                            DatumKupovine = DateTime.Parse(kup[3]),
-                            NaplacenaCena = double.Parse(kup[4])
+                            Kupac = citajKorisnike().Values.Where(k => k.Id == Int32.Parse(kup[0])).Select(k => k).SingleOrDefault(),
+                            _Vozilo = citajVozila().Where(v => v.Id == Int32.Parse(kup[1])).Select(v => v).SingleOrDefault(),
+                            DatumKupovine = DateTime.ParseExact(kup[2], "d/M/yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                            NaplacenaCena = double.Parse(kup[3])
 
-                        }); */
+                        }); 
 
                     }
                 }
