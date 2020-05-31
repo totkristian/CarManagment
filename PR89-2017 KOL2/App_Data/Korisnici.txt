@@ -1,2 +1,2 @@
-tot|123|Kristian|tot|MUSKO|kristiantot20@gmail.com|04/05/2020|ADMINISTRATOR
-asd|asd|asd|asd|MUSKO|asd|26/05/2020|KUPAC
+tot|123|Kristian|tot|MUSKO|kristiantot20@gmail.com|04/05/2020|ADMINISTRATOR|False
+asd|asd|asd|asd|MUSKO|asd|26/05/2020|KUPAC|True
