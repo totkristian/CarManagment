@@ -37,7 +37,8 @@ namespace PR89_2017_KOL2.Helpers
                             Pol = (Sex)Enum.Parse(typeof(Sex), user[4]),
                             Email = user[5],
                             DatumRodjenja = DateTime.ParseExact(user[6], "d/M/yyyy", System.Globalization.CultureInfo.InvariantCulture),
-                            Uloga = (Role)Enum.Parse(typeof(Role), user[7])
+                            Uloga = (Role)Enum.Parse(typeof(Role), user[7]),
+                            Obrisan = bool.Parse(user[8])
                         });
                     }
                 }
