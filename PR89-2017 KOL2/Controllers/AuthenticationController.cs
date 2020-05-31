@@ -30,6 +30,7 @@ namespace PR89_2017_KOL2.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Message = "Korisnik nije uspesno registrovan!";
                 setErrorMessages(korisnik);
                 return View();
             }
@@ -60,7 +61,7 @@ namespace PR89_2017_KOL2.Controllers
 
             if(korisnik == null || korisnik.Obrisan == true)
             {
-                ViewBag.Message = "Korisnik ne postoji!";
+                ViewBag.Message = "Pogresna lozinka ili korisnicko ime!";
                 return View("Index");
             }
             Session["korisnik"] = korisnik;
