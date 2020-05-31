@@ -1,22 +1,22 @@
-﻿<h2>Login</h2>
-<div>
-    @ViewBag.Message
+﻿@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+ }
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form_main">
+                <h4 class="heading"><strong>Login</strong></h4>
+                <div class="form">
+                    <form action="Login" method="post">
+                        <input type="text" name="korisnickoIme" placeholder="Korisnicko ime" class="txt" />
+                        <input type="password" name="lozinka" placeholder="Lozinka" class="txt" />
+                        <input type="submit" value="Login" name="login" class="txt2">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<form action="Login" method="post">
-    <table>
-        <tr>
-            <td>Korisnicko ime:</td>
-            <td><input type="text" name="korisnickoIme" /></td>
-        </tr>
-        <tr>
-            <td>Lozinka:</td>
-            <td><input type="password" name="lozinka" /></td>
-        </tr>
-        <tr>       
-            <td colspan="2">
-                <input type="submit" name="login" />
-            </td>
-        </tr>
-    </table>
-</form>
-

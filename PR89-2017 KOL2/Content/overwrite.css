@@ -31,14 +31,14 @@
     padding: 6px;
 }
 
-.txt[type="text"], .txt[type="number"] {
+.txt[type="text"], .txt[type="number"], .txt[type="password"], .txt[type="date"] {
     border: 1px solid #ccc;
     margin: 10px 0;
     padding: 10px 0 10px 5px;
     width: 100%;
 }
 
-.txt_3[type="text"]  {
+.txt_3[type="text"] {
     margin: 10px 0 0;
     padding: 10px 0 10px 5px;
     width: 100%;
@@ -63,5 +63,10 @@
     color: #5793ef;
     transition: all 0.5s ease 0s;
 }
-
-
+.txt2MOJ[type="submit"] {
+    width: 40%;
+}
+.alert, alert-danger {
+    margin-top: 2px;
+    width: 50%;
+}

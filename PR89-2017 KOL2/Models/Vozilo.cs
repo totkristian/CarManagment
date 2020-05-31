@@ -9,35 +9,44 @@ namespace PR89_2017_KOL2.Models
     public class Vozilo
     {
         private int id;
-        [Required(ErrorMessage = "Marka je obavezna!"), MinLength(3)]
+        
         private string marka;
-        [Required(ErrorMessage = "Model je obavezan!")]
+        
         private string model;
-        [Required(ErrorMessage = "Oznaka sasije je obavezna!")]
+        
         private string oznakaSasije;
-        [Required(ErrorMessage = "Boja je obavezna")]
+        
         private string boja;
-        [Required(ErrorMessage = "Boja je obavezna!")]
+        
         private int brojVrata;
-        [Required(ErrorMessage = "Opis je obavezan!")]
+        
         private string opis;
-        [Required(ErrorMessage = "Vrsta goriva je obavezna!")]
+        
         private Fuel vrstaGoriva;
-        [Required(ErrorMessage = "Cena je obavezna!")]
+        
         private double cena;
-        [Required(ErrorMessage = "Stanje je obavezno!")]
         private bool naStanju;
 
         private int kupacId;
 
         public int Id { get => id; set => id = value; }
+        [Required(ErrorMessage = "Marka je obavezna!"), MinLength(3)]
         public string Marka { get => marka; set => marka = value; }
+        [Required(ErrorMessage = "Model je obavezan!")]
         public string Model { get => model; set => model = value; }
+        [Required(ErrorMessage = "Oznaka sasije je obavezna!")]
         public string OznakaSasije { get => oznakaSasije; set => oznakaSasije = value; }
+        [Required(ErrorMessage = "Boja je obavezna")]
         public string Boja { get => boja; set => boja = value; }
+        [Required(ErrorMessage = "Broj vrata je obavezna!")]
+        [Range(1, 5, ErrorMessage = "Nije dobar broj vrata!")]
         public int BrojVrata { get => brojVrata; set => brojVrata = value; }
+        [Required(ErrorMessage = "Opis je obavezan!")]
         public string Opis { get => opis; set => opis = value; }
+        [Required(ErrorMessage = "Vrsta goriva je obavezna!")]
         public Fuel VrstaGoriva { get => vrstaGoriva; set => vrstaGoriva = value; }
+        [Required(ErrorMessage = "Cena je obavezna!")]
+        [Range(1, double.MaxValue, ErrorMessage = "Nije dobar broj vrata!")]
         public double Cena { get => cena; set => cena = value; }
         public bool NaStanju { get => naStanju; set => naStanju = value; }
         public int KupacId { get => kupacId; set => kupacId = value; }

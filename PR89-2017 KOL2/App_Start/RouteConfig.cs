@@ -16,7 +16,7 @@ namespace PR89_2017_KOL2
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Authentication", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

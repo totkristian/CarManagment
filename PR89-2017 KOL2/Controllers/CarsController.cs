@@ -174,12 +174,36 @@ namespace PR89_2017_KOL2.Controllers
 
         public ActionResult AddCar()
         {
+            Korisnik k = (Korisnik)Session["korisnik"];
+            List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
+            if (k == null || k.Uloga.Equals(Role.KUPAC))
+            {
+                ViewBag.Vozila = vozila;
+                ViewBag.Message = "Nemate prava pristupa ovoj stranici!";
+                ucitajOpcije();
+                return View("Cars");
+            }
             return View();
         }
         [HttpPost]
         public ActionResult AddCar(Vozilo vozilo)
         {
-            List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];         
+            Korisnik k = (Korisnik)Session["korisnik"];
+            List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
+            if (k == null || k.Uloga.Equals(Role.KUPAC))
+            {
+                ViewBag.Vozila = vozila;
+                ViewBag.Message = "Nemate prava pristupa ovoj stranici!";
+                ucitajOpcije();
+                return View("Cars");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                setErrorMessages(vozilo);
+                ViewBag.Message = "Vozilo nije uspesno dodato!";
+                return View();
+            }        
             vozilo.Id = vozila.Count == 0 ? 1 : vozila.Select(x => x.Id).Max() + 1;
             vozilo.KupacId = -1;
             vozilo.NaStanju = true;
@@ -205,6 +229,55 @@ namespace PR89_2017_KOL2.Controllers
 
         }
 
+        private void setErrorMessages(Vozilo vozilo)
+        {
+            if (String.IsNullOrEmpty(vozilo.Marka))
+            {
+                ViewBag.MarMsg = "Marka je obavezna!";
+            }
+            else if(vozilo.Marka.Length<3)
+            {
+                ViewBag.MarMsg = "Marka nije validna!";
+            }
+
+            if (String.IsNullOrWhiteSpace(vozilo.Model))
+            {
+                ViewBag.ModMsg = "Model je obavezan!";
+
+            }
+            if(String.IsNullOrWhiteSpace(vozilo.Opis))
+            {
+                ViewBag.OpMsg = "Opis je obavezan!";
+            }
+            if(String.IsNullOrWhiteSpace(vozilo.OznakaSasije))
+            {
+                ViewBag.OzMsg = "Oznaka sasije je obavezna!";
+            }
+            if (String.IsNullOrWhiteSpace(vozilo.Boja))
+            {
+                ViewBag.BoMsg = "Boja je obavezna!";
+            }
+
+            if(vozilo.BrojVrata <= 0 || vozilo.BrojVrata > 5)
+            {
+                ViewBag.BrMsg = "Nije validan broj vrata";
+            }
+
+            if(vozilo.Cena <= 0)
+            {
+                ViewBag.CeMsg = "Nije validna cena vozila";
+            }
+            if(!vozilo.VrstaGoriva.Equals(Fuel.BENZIN) && 
+                !vozilo.VrstaGoriva.Equals(Fuel.BENZIN_GAS) && 
+                !vozilo.VrstaGoriva.Equals(Fuel.DIZEL) && 
+                !vozilo.VrstaGoriva.Equals(Fuel.ELEKTRICNI_POGON) &&
+                !vozilo.VrstaGoriva.Equals(Fuel.HIBRIDNI_POGON) &&
+                !vozilo.VrstaGoriva.Equals(Fuel.METAN))
+            {
+                ViewBag.VrMsg = "Nije validna vrsta goriva!";
+            }
+        }
+
         public ActionResult BuyEditCar(int id, string button)
         {
             if (button.Contains("Izmeni"))
@@ -223,8 +296,17 @@ namespace PR89_2017_KOL2.Controllers
         [HttpPost]
         public ActionResult EditCarMethod(Vozilo vozilo, string submit)
         {
-
+            Korisnik k = (Korisnik)Session["korisnik"];
             List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
+            if (k == null || k.Uloga.Equals(Role.KUPAC))
+            {
+                ViewBag.Vozila = vozila;
+                ViewBag.Message = "Nemate prava pristupa ovoj stranici!";
+                ucitajOpcije();
+                return View("Cars");
+            }
+
+           
             if (submit.Equals("Otkazi"))
             {
                 ViewBag.Vozila = vozila;
@@ -234,6 +316,13 @@ namespace PR89_2017_KOL2.Controllers
             else {
                 try
                 {
+                    if (!ModelState.IsValid)
+                    {
+                        setErrorMessages(vozilo);
+                        ViewBag.Vozilo = vozilo;
+                        ViewBag.Message = "Izmena vozila neuspesna!";
+                        return View("EditCar");
+                    }
                     vozilo.NaStanju = true;
                     vozilo.KupacId = -1;
                     int index = vozila.FindIndex(x => x.Id == vozilo.Id);
@@ -254,8 +343,17 @@ namespace PR89_2017_KOL2.Controllers
         [HttpPost]
         public ActionResult BuyCar(Vozilo vozilo, string submit)
         {
-            Kupovina kupovina = new Kupovina();
             List<Vozilo> vozila = (List<Vozilo>)HttpContext.Application["vozila"];
+            Korisnik kor = (Korisnik)Session["korisnik"];
+            if(kor == null || kor.Uloga.Equals(Role.ADMINISTRATOR))
+            {
+                ViewBag.Vozila = vozila;
+                ViewBag.Message = "Nemate prava pristupa ovoj stranici!";
+                ucitajOpcije();
+                return View("Cars");
+            }
+            Kupovina kupovina = new Kupovina();
+            
             if (submit.Equals("Otkazi"))
             {
                 ViewBag.Vozila = vozila;
@@ -269,15 +367,19 @@ namespace PR89_2017_KOL2.Controllers
                     int index = vozila.FindIndex(x => x.Id == vozilo.Id);
                     vozilo.NaStanju = false;
                     vozila[index] = vozilo;
+
                     if (!CitanjePodataka.izmeniVozilo(vozila))
                         throw new Exception();
                     HttpContext.Application["vozila"] = vozila;
+
                     List<Kupovina> k = CitanjePodataka.citajKupovinu();
+
                     kupovina.Id = k.Count == 0 ? 1 : k.Select(x=>x.Id).Max() + 1;
                     kupovina.Kupac = (Korisnik)Session["korisnik"];
                     kupovina.DatumKupovine = DateTime.Now.Date;
                     kupovina._Vozilo = vozila[index];
                     kupovina.NaplacenaCena = vozila[index].Cena;
+
                     if (!CitanjePodataka.pisiKupovinu(kupovina))
                         throw new Exception();
 
@@ -300,9 +402,23 @@ namespace PR89_2017_KOL2.Controllers
             Korisnik k = (Korisnik)Session["korisnik"];
             if (k != null && k.Uloga.Equals(Role.KUPAC))
             {
-                List<Kupovina> kupovina = CitanjePodataka.citajKupovinu();
-                ViewBag.Kupovine = CitanjePodataka.citajKupovinu().Where(x => x.Kupac.Id == k.Id).Select(x => x);
-                return View();
+                try
+                {
+                    List<Kupovina> kupovina = CitanjePodataka.citajKupovinu();
+                    if (kupovina.Count < 1)
+                    {
+                        ViewBag.Kupovine = kupovina;
+                    }
+                    else
+                    {
+                        ViewBag.Kupovine = CitanjePodataka.citajKupovinu().Where(x => x.Kupac.Id == k.Id).Select(x => x);
+                    }
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Neuspesan prikaz svih kupovina!";
+                }
             }
             List<Vozilo> vozila = ((List<Vozilo>)HttpContext.Application["vozila"]);
             ViewBag.Vozila = vozila;

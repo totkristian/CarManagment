@@ -5,9 +5,12 @@
 
 <h2>Kupljena vozila</h2>
 
-<div>
-    @ViewBag.Message
-</div>
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+}
 <div>
     <div class="container">
         <div class="row col-lg-12 col-md-offset custyle">
