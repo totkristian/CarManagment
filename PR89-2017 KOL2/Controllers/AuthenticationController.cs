@@ -48,13 +48,13 @@ namespace PR89_2017_KOL2.Controllers
             Korisnik korisnik = korisnici.Where(x => x.Value.KorisnickoIme.Equals(korisnickoIme) && x.Value.Lozinka.Equals(lozinka)).Select(x => x.Value).SingleOrDefault();
             
 
-            if(korisnik == null)
+            if(korisnik == null || korisnik.Obrisan == true)
             {
                 ViewBag.Message = "Korisnik ne postoji!";
                 return View("Index");
             }
             Session["korisnik"] = korisnik;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Cars", "Cars");
         }
 
         public ActionResult Logout()
