@@ -1,0 +1,51 @@
+﻿@using CarManagment.Models
+@{
+    ViewBag.Title = "MyCars";
+}
+
+<h2>Kupljena vozila</h2>
+
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger" role="alert" style="width: 30%;">
+        @ViewBag.Message
+    </div>
+}
+<div>
+    <div class="container">
+        <div class="row col-lg-12 col-md-offset custyle">
+            <table class="table table-striped custab">
+                <thead>
+                    <!-- <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a> -->
+                    <tr>
+                        <th>ID kupovine</th>
+                        <th>Marka</th>
+                        <th>Model</th>
+                        <th>Oznaka Sasije</th>
+                        <th>Boja</th>
+                        <th>Broj Vrata</th>
+                        <th>Opis</th>
+                        <th>Vrsta Goriva</th>
+                        <th>Datum</th>
+                        <th>Cena</th>
+                    </tr>
+                </thead>
+                @foreach (Kupovina kupovina in ViewBag.Kupovine)
+                {
+                    <tr>
+                        <td>@kupovina.Id</td>
+                        <td>@kupovina._Vozilo.Marka</td>
+                        <td>@kupovina._Vozilo.Model</td>
+                        <td>@kupovina._Vozilo.OznakaSasije</td>
+                        <td>@kupovina._Vozilo.Boja</td>
+                        <td>@kupovina._Vozilo.BrojVrata</td>
+                        <td>@kupovina._Vozilo.Opis</td>
+                        <td>@kupovina._Vozilo.VrstaGoriva</td>
+                        <td>@kupovina.DatumKupovine.ToString("dd/MM/yyyy")</td>
+                        <td>@kupovina.NaplacenaCena</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
